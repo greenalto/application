@@ -66,6 +66,17 @@ directory "#{app['deploy_to']}/shared" do
   recursive true
 end
 
+# Create subdirectories inside the shared dir from the data bag if they exist
+shared_dirs = app['shared_dirs'] || []
+shared_dirs.each do |dir|
+  directory "#{app['deploy_to']}/shared/#{dir}" do
+    owner app['owner']
+    group app['group']
+    mode '0755'
+    recursive true
+  end
+end
+
 if app.has_key?("deploy_key")
   ruby_block "write_key" do
     block do
@@ -137,7 +148,7 @@ deploy_revision app['id'] do
   shallow_clone true
   purge_before_symlink([])
   create_dirs_before_symlink([])
-  symlinks({})
+  symlinks app['symlinks'] || {} # symlinks from data bag
   symlink_before_migrate({
     local_settings_file_name => local_settings_full_path
   })

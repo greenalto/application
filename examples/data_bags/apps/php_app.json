@@ -59,5 +59,13 @@
     "pear_name": "specific gems required for installation to run the application, and if a specific version is required, e.g.",
     "mongo": "1.1.4"
   },
+  // A hash of files or dirs to symlink, in this example /srv/my_app/shared/log will be symlinked to /srv/my_app/current/public/log
+  "symlinks": {
+    "log": "path relative to current deploy, e.g. public/log",
+  },
+  // An array of dirs to create inside the shared dir, in this example /srv/my_app/shared/log will be created
+  "shared_dirs": [
+    "log"
+  ],
   "local_settings_file": "some/realative/path/LocalSettings.php"
 }
